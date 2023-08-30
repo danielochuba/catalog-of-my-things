@@ -147,7 +147,6 @@ class App
         end
     end
 
-    
     def create_music_album
         puts "  CREATING A NEW MUSIC ALBUM..."
         puts
@@ -212,5 +211,21 @@ class App
         puts
     end
 
+    def list_music_albums
+        puts
+        puts "All music albums..."
+        puts "***************"
+        puts
+        @music_albums.each do |music_album|
+            puts "ID: #{music_album.id}"
+            puts "Genre: #{music_album.genre.name}"
+            puts "Author: #{music_album.author.first_name} #{music_album.author.last_name}"
+            puts "Label-- Title: #{music_album.label.title} | Color: #{music_album.label.color}"
+            puts "Publish Date: #{music_album.publish_date}"
+            puts "On Spotify: #{music_album.on_spotify}"
+            puts "Archived: #{music_album.archived}"
+            puts "-----------------------------"
+        end
+    end
 
 end
