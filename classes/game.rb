@@ -9,4 +9,9 @@ class Game < Item
         @last_played = last_played
     end
 
+    def can_be_archived? 
+        # should return true if parent's method returns true AND if last_played_at is older than 2 years.
+        
+        super && @last_played.year < (Date.today.year - 2)
+    end
 end
