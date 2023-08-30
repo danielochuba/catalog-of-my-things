@@ -350,5 +350,17 @@ class App
         end
     end
 
+    def list_labels
+        puts
+        puts "All labels..."
+        puts "***************"
+        puts
+        @labels.each do |label|
+            puts "ID: #{label.id}"
+            puts "Title: #{label.title}"
+            puts "Color: #{label.color}"
+            puts "-----------------------------"
+        end
+    end
 
 end
