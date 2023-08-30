@@ -69,5 +69,64 @@ class App
         end
     end
 
+    def create_book
+        puts "  CREATING A NEW BOOK ..."
+        puts
+        print "Please enter the book's genre:  "
+        genre = gets.chomp
+        genre = Genre.new(genre) unless @genres.include?(genre)
+        @genres << genre
+
+        puts
+        puts "Please enter the book's author:  "
+        puts
+        print "Enter first name:  "
+        first_name = gets.chomp.to_s
+        print "Enter last name:  "
+        last_name = gets.chomp.to_s
+
+        author = Author.new(first_name, last_name) unless @authors.include?(author)
+        @authors << author
+
+        puts
+        puts "Please enter the book's label:"
+        puts
+        print "  Enter book title:  "
+        title = gets.chomp.to_s
+        print "  Enter book color:  "
+        color = gets.chomp.to_s
+
+        label = Label.new(title, color) unless @labels.include?(label)
+        @labels << label
+
+        puts
+        print "Please enter the book's publisher:  "
+        publisher = gets.chomp
+        puts
+        print "Please enter the book's cover state: (good / bad) "
+        cover_state = gets.chomp.to_s.downcase
+
+        puts
+        puts "Please enter the book's publish date: "
+        puts
+        print "  Enter year:  "
+        year = gets.chomp
+
+        print "  Enter month: (01 - 12):  "
+        month = gets.chomp
+
+        print "  Enter day: (01 - 31):  "
+        day = gets.chomp
+
+        publish_date = Date.new(year.to_i, month.to_i, day.to_i)
+
+        book = Book.new(publisher, cover_state, genre, author, label, publish_date)
+        book.move_to_archive
+        @items << book
+        @books << book
+
+        puts "Book created successfully!"
+        puts
+    end
 
 end
