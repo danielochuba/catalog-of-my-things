@@ -363,4 +363,45 @@ class App
         end
     end
 
+    def list_items
+        puts
+        puts "All items..."
+        puts "***************"
+        puts
+        @items.each do |item|
+                if item.instance_of?(Book)
+                puts 'BOOk'
+                   puts "ID: #{item.id}"
+                    puts "Genre: #{item.genre.name}"
+                    puts "Author: #{item.author.first_name} #{item.author.last_name}"
+                    puts "Label-- Title: #{item.label.title} | Color: #{item.label.color}"
+                    puts "Publish Date: #{item.publish_date}"
+                    puts "Archived: #{item.archived}"
+                    puts "-----------------------------"
+                elsif item.instance_of?(MusicAlbum)
+                    puts 'MUSIC_ALBUM'
+                    puts "ID: #{item.id}"
+                    puts "Genre: #{item.genre.name}"
+                    puts "Author: #{item.author.first_name} #{item.author.last_name}"
+                    puts "Label-- Title: #{item.label.title} | Color: #{item.label.color}"
+                    puts "Publish Date: #{item.publish_date}"
+                    puts "On Spotify: #{item.on_spotify}"
+                    puts "Archived: #{item.archived}"
+                    puts "-----------------------------"
+                elsif item.instance_of?(Game)
+                    puts 'GAME'
+                    puts "ID: #{item.id}"
+                    puts "Genre: #{item.genre.name}"
+                    puts "Author: #{item.author.first_name} #{item.author.last_name}"
+                    puts "Label-- Title: #{item.label.title} | Color: #{item.label.color}"
+                    puts "Publish Date: #{item.publish_date}"
+                    puts "Last Played Date: #{item.last_played}"
+                    puts "Multiplayer: #{item.multiplayer}"
+                    puts "Archived: #{item.archived}"
+                    puts "-----------------------------"
+                end 
+                     
+        end
+    end
+
 end
