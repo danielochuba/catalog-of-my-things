@@ -129,4 +129,22 @@ class App
         puts
     end
 
+    def list_books
+        puts
+        puts "All books..."
+        puts "***************"
+        puts
+        @books.each do |book|
+            puts "ID: #{book.id}"
+            puts "Genre: #{book.genre.name}"
+            puts "Author: #{book.author.first_name} #{book.author.last_name}"
+            puts "Label-- Title: #{book.label.title} | Color: #{book.label.color}"
+            puts "Publish Date: #{book.publish_date}"
+            puts "Publisher: #{book.publisher}"
+            puts "Cover State: #{book.cover_state}"
+            puts "Archived: #{book.archived}"
+            puts "-----------------------------"
+        end
+    end
+
 end
