@@ -307,6 +307,35 @@ class App
         puts
     end
 
-    
+    def list_games
+        puts
+        puts "All games..."
+        puts "***************"
+        puts
+        @games.each do |game|
+            puts "ID: #{game.id}"
+            puts "Genre: #{game.genre.name}"
+            puts "Author: #{game.author.first_name} #{game.author.last_name}"
+            puts "Label-- Title: #{game.label.title} | Color: #{game.label.color}"
+            puts "Publish Date: #{game.publish_date}"
+            puts "Last Played Date: #{game.last_played}"
+            puts "Multiplayer: #{game.multiplayer}"
+            puts "Archived: #{game.archived}"
+            puts "-----------------------------"
+        end
+    end
+
+    def list_genres
+        puts
+        puts "All genres..."
+        puts "***************"
+        puts
+        @genres.each do |genre|
+            puts "ID: #{genre.id}"
+            puts "Name: #{genre.name}"
+            puts "-----------------------------"
+        end
+    end
+
 
 end
