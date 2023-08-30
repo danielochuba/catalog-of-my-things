@@ -337,5 +337,18 @@ class App
         end
     end
 
+    def list_authors
+        puts
+        puts "All authors..."
+        puts "***************"
+        puts
+        @authors.each do |author|
+            puts "ID: #{author.id}"
+            puts "First Name: #{author.first_name}"
+            puts "Last Name: #{author.last_name}"
+            puts "-----------------------------"
+        end
+    end
+
 
 end
