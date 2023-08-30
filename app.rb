@@ -147,4 +147,70 @@ class App
         end
     end
 
+    
+    def create_music_album
+        puts "  CREATING A NEW MUSIC ALBUM..."
+        puts
+        print "Please enter the music album's genre:  "
+        genre = gets.chomp
+        genre = Genre.new(genre) unless @genres.include?(genre)
+        @genres << genre
+
+        puts
+        puts "Please enter the music album's author:  "
+        puts
+        print "  Enter first name:  "
+        first_name = gets.chomp.to_s
+        print "  Enter last name:  "
+        last_name = gets.chomp.to_s
+
+        author = Author.new(first_name, last_name) unless @authors.include?(author)
+        @authors << author
+
+        puts
+        puts "Please enter the music album's label:"
+        puts
+        print "  Enter album title:  "
+        title = gets.chomp.to_s
+        print "  Enter album color:  "
+        color = gets.chomp.to_s
+        
+        label = Label.new(title, color) unless @labels.include?(label)
+        @labels << label
+
+        puts
+        print "Is album on Spotify? (yes / no):  "
+        on_spotify = gets.chomp.to_s.downcase
+
+        if on_spotify == "yes"
+            on_spotify = true
+        else
+            on_spotify = false
+        end
+        
+        puts
+        puts "Please enter the music album's publish date: "
+        puts
+        print "  Enter year:  "
+        year = gets.chomp
+
+        print "  Enter month: (01 - 12):  "
+        month = gets.chomp
+
+        print "  Enter day: (01 - 31):  "
+        day = gets.chomp
+
+        publish_date = Date.new(year.to_i, month.to_i, day.to_i)
+
+        music_album = MusicAlbum.new(on_spotify, genre, author, label, publish_date)
+        music_album.move_to_archive
+        @items << music_album
+        @music_albums << music_album
+
+        puts
+        puts "Music album created successfully!"
+        puts
+    end
+
+
 end
