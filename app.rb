@@ -37,5 +37,37 @@ class App
         puts
     end
 
+    def process_input(input)
+        case input
+        when 1
+            create_book
+        when 2
+            create_music_album
+        when 3
+            create_game
+        when 4
+            list_books
+        when 5
+            list_music_albums
+        when 6
+            list_games
+        when 7
+            list_genres
+        when 8
+            list_labels
+        when 9
+            list_authors
+        when 10
+            list_items
+        when 11
+            archive_item
+        when 12
+            puts "  Thank you for using my app!.....Goodbye!"
+            exit
+        else
+            puts "Invalid input. Please try again."
+        end
+    end
+
 
 end
