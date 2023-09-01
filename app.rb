@@ -453,4 +453,9 @@ class App
         puts "Error loading file: #{e}"
     end
 
+    def load_music_albums(filename)
+        @music_albums = JSON.parse(File.read(filename))
+      rescue StandardError => e
+        puts "Error loading file: #{e}"
+    end
 end
