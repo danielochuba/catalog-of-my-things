@@ -1,3 +1,4 @@
+require 'json'
 require 'date'
 require './classes/item'
 require './classes/genre'
@@ -125,25 +126,46 @@ class App
         @items << book
         @books << book
 
+        book_to_store = @books.map do |book| {
+            "id" => book.id,
+            "genre" => book.genre.name,
+            "title" => book.label.title,
+            "color" => book.label.color,
+            "author" => book.author.first_name + " " + book.author.last_name,
+            "publish_date" => book.publish_date,
+            "publisher" => book.publisher,
+            "cover_state" => book.cover_state,
+            "archived" => book.archived
+        }
+        end
+
+        store_data('./store/books.json', book_to_store)
+
+
         puts "Book created successfully!"
         puts
     end
 
     def list_books
+        load_books('./store/books.json')
         puts
         puts "All books..."
         puts "***************"
         puts
-        @books.each do |book|
-            puts "ID: #{book.id}"
-            puts "Genre: #{book.genre.name}"
-            puts "Author: #{book.author.first_name} #{book.author.last_name}"
-            puts "Label-- Title: #{book.label.title} | Color: #{book.label.color}"
-            puts "Publish Date: #{book.publish_date}"
-            puts "Publisher: #{book.publisher}"
-            puts "Cover State: #{book.cover_state}"
-            puts "Archived: #{book.archived}"
-            puts "-----------------------------"
+        if !@books.empty? 
+            @books.each do |book|
+                puts "ID: #{book["id"]}"
+                puts "Genre: #{book["genre"]}"
+                puts "Author: #{book["author"]}"
+                puts "Label-- Title: #{book["title"]} | Color: #{book["color"]}"
+                puts "Publish Date: #{book["publish_date"]}"
+                puts "Publisher: #{book["publisher"]}"
+                puts "Cover State: #{book["cover_state"]}"
+                puts "Archived: #{book["archived"]}"
+                puts "-----------------------------"
+            end
+        else
+            puts "No books found."
         end
     end
 
@@ -403,5 +425,13 @@ class App
                      
         end
     end
+
+    def store_data(filename, data)
+        File.write(filename, JSON.generate(data))
+      rescue StandardError => e
+        puts "Error writing file: #{e}"
+    end
+
+    
 
 end
