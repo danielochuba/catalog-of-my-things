@@ -36,6 +36,7 @@ class App
         puts " 11. Archive an item"
         puts " 12. Exit"
         puts
+        load_genres
     end
 
     def process_input(input)
@@ -63,6 +64,7 @@ class App
         when 11
             archive_item
         when 12
+            save_genres
             puts "  Thank you for using my app!.....Goodbye!"
             exit
         else
@@ -480,4 +482,21 @@ class App
       rescue StandardError => e
         puts "Error loading file: #{e}"
     end
+
+    def load_genres
+        @genres = JSON.parse(File.read('./store/genres.json'))
+      rescue StandardError => e
+        puts "Error loading file: #{e}"
+    end
+
+    def save_genres
+        genres_to_store = @genres.map do |genre| {
+            "id" => genre.id,
+            "name" => genre.name
+        }
+        end
+
+        store_data('./store/genres.json', genres_to_store)
+    end
+    
 end
