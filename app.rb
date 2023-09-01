@@ -432,6 +432,10 @@ class App
         puts "Error writing file: #{e}"
     end
 
-    
+    def load_books(filename)
+       @books = JSON.parse(File.read(filename))
+      rescue StandardError => e
+        puts "Error loading file: #{e}"
+    end
 
 end
