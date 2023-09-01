@@ -340,24 +340,40 @@ class App
         @items << game
         @games << game
 
+        game_to_store = @games.map do |game| {
+            "id" => game.id,
+            "genre" => game.genre.name,
+            "title" => game.label.title,
+            "color" => game.label.color,
+            "author" => game.author.first_name + " " + game.author.last_name,
+            "publish_date" => game.publish_date,
+            "multiplayer" => game.multiplayer,
+            "last_played" => game.last_played,
+            "archived" => game.archived
+        }
+        end
+
+        store_data('./store/games.json', game_to_store)
+
         puts "Game created successfully!"
         puts
     end
 
     def list_games
+        load_games('./store/games.json')
         puts
         puts "All games..."
         puts "***************"
         puts
         @games.each do |game|
-            puts "ID: #{game.id}"
-            puts "Genre: #{game.genre.name}"
-            puts "Author: #{game.author.first_name} #{game.author.last_name}"
-            puts "Label-- Title: #{game.label.title} | Color: #{game.label.color}"
-            puts "Publish Date: #{game.publish_date}"
-            puts "Last Played Date: #{game.last_played}"
-            puts "Multiplayer: #{game.multiplayer}"
-            puts "Archived: #{game.archived}"
+            puts "ID: #{game["id"]}"
+            puts "Genre: #{game["genre"]}"
+            puts "Author: #{game["author"]}"
+            puts "Label-- Title: #{game["title"]} | Color: #{game["color"]}"
+            puts "Publish Date: #{game["publish_date"]}"
+            puts "Multiplayer: #{game["multiplayer"]}"
+            puts "Last Played: #{game["last_played"]}"
+            puts "Archived: #{game["archived"]}"
             puts "-----------------------------"
         end
     end
@@ -455,6 +471,12 @@ class App
 
     def load_music_albums(filename)
         @music_albums = JSON.parse(File.read(filename))
+      rescue StandardError => e
+        puts "Error loading file: #{e}"
+    end
+
+    def load_games(filename)
+        @games = JSON.parse(File.read(filename))
       rescue StandardError => e
         puts "Error loading file: #{e}"
     end
