@@ -77,7 +77,7 @@
 
 A short description of the project:
 
-[Video Intro](https://drive.google.com/file/d/1YMkNOQr9J4tsz6oUlM4wwOfyRlOjXi5U/view?usp=sharing)
+[Video Intro](https://drive.google.com/file/d/1ocpA4RA-aOs0zUWaFtzCjqO8CJpYmkG7/view?usp=sharing)
 
 ## 💻 Getting Started <a name="getting-started"></a>
 
