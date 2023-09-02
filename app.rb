@@ -130,7 +130,7 @@ module BookModule
       puts 'No books found.'
     else
       books.each do |book|
-        puts "ID: #{book['íd']}"
+        puts "ID: #{book['id']} "
         puts "Genre: #{book['genre']}"
         puts "Author: #{book['author']}"
         puts "Label-- Title: #{book['title']} | Color: #{book['color']}"
@@ -323,8 +323,8 @@ module ListHandler
       puts 'No genres found!'
     else
       genres.each do |genre|
-        puts "ID: #{genre.id}"
-        puts "Name: #{genre.name}"
+        puts "ID: #{genre['id']}"
+        puts "Name: #{genre['name']}"
         puts '-----------------------------'
       end
     end
@@ -340,9 +340,9 @@ module ListHandler
       puts 'No authors found!'
     else
       authors.each do |author|
-        puts "ID: #{author.id}"
-        puts "First Name: #{author.first_name}"
-        puts "Last Name: #{author.last_name}"
+        puts "ID: #{author['id']}"
+        puts "First Name: #{author['first_name']}"
+        puts "Last Name: #{author['last_name']}"
         puts '-----------------------------'
       end
     end
@@ -358,9 +358,9 @@ module ListHandler
       puts 'No labels found!'
     else
       labels.each do |label|
-        puts "ID: #{label.id}"
-        puts "Title: #{label.title}"
-        puts "Color: #{label.color}"
+        puts "ID: #{label['id']}"
+        puts "Title: #{label['title']}"
+        puts "Color: #{label['color']}"
         puts '-----------------------------'
       end
     end

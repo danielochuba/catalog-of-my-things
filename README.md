@@ -73,6 +73,12 @@
 
 <!-- GETTING STARTED -->
 
+### Video Intro
+
+A short description of the project:
+
+[Video Intro](https://drive.google.com/file/d/1YMkNOQr9J4tsz6oUlM4wwOfyRlOjXi5U/view?usp=sharing)
+
 ## 💻 Getting Started <a name="getting-started"></a>
 
 - Step 1: Clone this project using this git comand "git clone", (if you don't have git installed please visit
