@@ -1,8 +1,6 @@
 require_relative '../classes/book'
 require 'date'
 
-
-
 RSpec.describe Book do
   describe '#can_be_archived?' do
     context 'Can be archived when the cover state is bad and publisher date is less than 10 years' do
