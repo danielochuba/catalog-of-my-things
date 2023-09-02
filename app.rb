@@ -1,3 +1,4 @@
+require 'json'
 require 'date'
 require './classes/item'
 require './classes/genre'
@@ -32,9 +33,10 @@ class App
         puts "  8. List all labels"
         puts "  9. List all authors"
         puts " 10. List all items"
-        puts " 11. Archive an item"
+        puts " 11. Load items from JSON file"
         puts " 12. Exit"
         puts
+      
     end
 
     def process_input(input)
@@ -60,8 +62,11 @@ class App
         when 10
             list_items
         when 11
-            archive_item
+            load_all_items
         when 12
+            save_genres
+            save_authors
+            save_labels
             puts "  Thank you for using my app!.....Goodbye!"
             exit
         else
@@ -125,25 +130,55 @@ class App
         @items << book
         @books << book
 
+        current_books = load_data('./store/books.json') || []
+
+        book_to_store = current_books + @books.map do |book| {
+            'id' => book.id,
+            "genre" => book.genre.name,
+            "title" => book.label.title,
+            "color" => book.label.color,
+            "author" => book.author.first_name + " " + book.author.last_name,
+            "publish_date" => book.publish_date,
+            "publisher" => book.publisher,
+            "cover_state" => book.cover_state,
+            "archived" => book.archived
+            }
+        end
+        store_data('./store/books.json', book_to_store)
         puts "Book created successfully!"
         puts
     end
 
+    def load_all_items
+        @books = load_data('./store/books.json')
+        @music_albums = load_data('./store/music_albums.json')
+        @games = load_data('./store/games.json')
+        @genres = load_data('./store/genres.json')
+        @labels = load_data('./store/labels.json')
+        @authors = load_data('./store/authors')
+    end
+
     def list_books
+        books = load_data('./store/books.json')
         puts
         puts "All books..."
         puts "***************"
         puts
-        @books.each do |book|
-            puts "ID: #{book.id}"
-            puts "Genre: #{book.genre.name}"
-            puts "Author: #{book.author.first_name} #{book.author.last_name}"
-            puts "Label-- Title: #{book.label.title} | Color: #{book.label.color}"
-            puts "Publish Date: #{book.publish_date}"
-            puts "Publisher: #{book.publisher}"
-            puts "Cover State: #{book.cover_state}"
-            puts "Archived: #{book.archived}"
-            puts "-----------------------------"
+
+        if !books.empty? 
+            books.each do |book|
+                puts "ID: #{book['íd']}"
+                puts "Genre: #{book["genre"]}"
+                puts "Author: #{book["author"]}"
+                puts "Label-- Title: #{book["title"]} | Color: #{book["color"]}"
+                puts "Publish Date: #{book["publish_date"]}"
+                puts "Publisher: #{book["publisher"]}"
+                puts "Cover State: #{book["cover_state"]}"
+                puts "Archived: #{book["archived"]}"
+                puts "-----------------------------"
+            end
+        else
+            puts "No books found."
         end
     end
 
@@ -206,25 +241,45 @@ class App
         @items << music_album
         @music_albums << music_album
 
+        current_music_albums = load_data('./store/music_albums.json') || []
+        music_album_to_store = current_music_albums + @music_albums.map do |music_album| {
+            "id" => music_album.id,
+            "genre" => music_album.genre.name,
+            "title" => music_album.label.title,
+            "color" => music_album.label.color,
+            "author" => music_album.author.first_name + " " + music_album.author.last_name,
+            "publish_date" => music_album.publish_date,
+            "on_spotify" => music_album.on_spotify,
+            "archived" => music_album.archived
+        }
+        end
+
+        store_data('./store/music_albums.json', music_album_to_store)
+
         puts
         puts "Music album created successfully!"
         puts
     end
 
     def list_music_albums
+        music_albums = load_data('./store/music_albums.json')
         puts
         puts "All music albums..."
         puts "***************"
         puts
-        @music_albums.each do |music_album|
-            puts "ID: #{music_album.id}"
-            puts "Genre: #{music_album.genre.name}"
-            puts "Author: #{music_album.author.first_name} #{music_album.author.last_name}"
-            puts "Label-- Title: #{music_album.label.title} | Color: #{music_album.label.color}"
-            puts "Publish Date: #{music_album.publish_date}"
-            puts "On Spotify: #{music_album.on_spotify}"
-            puts "Archived: #{music_album.archived}"
+        if !music_albums.empty?
+        music_albums.each do |music_album|
+            puts "ID: #{music_album["id"]}"
+            puts "Genre: #{music_album["genre"]}"
+            puts "Author: #{music_album["author"]}"
+            puts "Label-- Title: #{music_album["title"]} | Color: #{music_album["color"]}"
+            puts "Publish Date: #{music_album["publish_date"]}"
+            puts "On Spotify: #{music_album["on_spotify"]}"
+            puts "Archived: #{music_album["archived"]}"
             puts "-----------------------------"
+        end
+        else
+            puts "No music albums found."
         end
     end
 
@@ -303,63 +358,99 @@ class App
         @items << game
         @games << game
 
+        current_game = load_data('./store/games.json') || []
+        game_to_store = current_game + @games.map do |game| {
+            "id" => game.id,
+            "genre" => game.genre.name,
+            "title" => game.label.title,
+            "color" => game.label.color,
+            "author" => game.author.first_name + " " + game.author.last_name,
+            "publish_date" => game.publish_date,
+            "multiplayer" => game.multiplayer,
+            "last_played" => game.last_played,
+            "archived" => game.archived
+        }
+        end
+
+        store_data('./store/games.json', game_to_store)
+
         puts "Game created successfully!"
         puts
     end
 
     def list_games
+        games = load_data('./store/games.json')
         puts
         puts "All games..."
         puts "***************"
         puts
-        @games.each do |game|
-            puts "ID: #{game.id}"
-            puts "Genre: #{game.genre.name}"
-            puts "Author: #{game.author.first_name} #{game.author.last_name}"
-            puts "Label-- Title: #{game.label.title} | Color: #{game.label.color}"
-            puts "Publish Date: #{game.publish_date}"
-            puts "Last Played Date: #{game.last_played}"
-            puts "Multiplayer: #{game.multiplayer}"
-            puts "Archived: #{game.archived}"
+        if !games.empty?
+            games.each do |game|
+            puts "ID: #{game["id"]}"
+            puts "Genre: #{game["genre"]}"
+            puts "Author: #{game["author"]}"
+            puts "Label-- Title: #{game["title"]} | Color: #{game["color"]}"
+            puts "Publish Date: #{game["publish_date"]}"
+            puts "Multiplayer: #{game["multiplayer"]}"
+            puts "Last Played: #{game["last_played"]}"
+            puts "Archived: #{game["archived"]}"
             puts "-----------------------------"
+            end
+        else
+            puts "No games found!"
         end
     end
 
     def list_genres
+        genres = load_data('./store/genres.json')
         puts
         puts "All genres..."
         puts "***************"
         puts
-        @genres.each do |genre|
+        if !genres.empty?
+        genres.each do |genre|
             puts "ID: #{genre.id}"
             puts "Name: #{genre.name}"
             puts "-----------------------------"
         end
+        else
+            puts "No genres found!"
+        end
     end
 
     def list_authors
+        authors = load_data('./store/authors.json')
         puts
         puts "All authors..."
         puts "***************"
         puts
-        @authors.each do |author|
+        if !authors.empty?
+        authors.each do |author|
             puts "ID: #{author.id}"
             puts "First Name: #{author.first_name}"
             puts "Last Name: #{author.last_name}"
             puts "-----------------------------"
         end
+        else
+            puts "No authors found!"
+        end
     end
 
     def list_labels
+        labels = load_data('./store/labels.json')
         puts
         puts "All labels..."
         puts "***************"
         puts
-        @labels.each do |label|
+        if !labels.empty?
+        labels.each do |label|
             puts "ID: #{label.id}"
             puts "Title: #{label.title}"
             puts "Color: #{label.color}"
             puts "-----------------------------"
+        end
+        else
+            puts "No labels found!"
         end
     end
 
@@ -402,6 +493,59 @@ class App
                 end 
                      
         end
+    end
+
+    def store_data(filename, data)
+        File.write(filename, JSON.generate(data))
+      rescue StandardError => e
+        puts "Error writing file: #{e}"
+    end
+
+    def save_genres
+        current_genres = load_data('./store/genres.json') || []
+        genres_to_store = current_genres + @genres.map do |genre| {
+            "id" => genre.id,
+            "name" => genre.name
+        }
+        end
+
+        store_data('./store/genres.json', genres_to_store)
+    end
+    
+    def load_data(filename)
+        unless File.exist?(filename)
+          File.open(filename, 'a')
+          return []
+        end
+    
+        data = File.read(filename)
+        JSON.parse(data) unless data.empty?
+    end
+
+    def save_authors
+        current_authors = load_data('./store/authors.json') || []
+        authors_to_store = current_authors + @authors.map do |author|
+            {
+                "id" => author.id,
+                "first_name" => author.first_name,
+                "last_name" => author.last_name
+            }
+        end
+
+        store_data('./store/authors.json', authors_to_store)
+    end
+
+    def save_labels
+        current_labels = load_data('./store/labels.json') || []
+        labels_to_store = current_labels + @labels.map do |label|
+            {
+                "id" => label.id,
+                "title" => label.title,
+                "color" => label.color
+            }
+        end
+
+        store_data('./store/labels.json', labels_to_store)
     end
 
 end
