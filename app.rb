@@ -32,7 +32,7 @@ module BookModule
   end
 
   def prompt_for_genre
-    print "Please enter the book's genre: "
+    print 'Please enter genre: '
     genre = gets.chomp
     genre = Genre.new(genre) unless @genres.include?(genre)
     @genres << genre
@@ -40,7 +40,7 @@ module BookModule
   end
 
   def prompt_for_author
-    puts "Please enter the book's author:"
+    puts 'Please enter author:'
     print 'Enter first name: '
     first_name = gets.chomp
     print 'Enter last name: '
@@ -48,6 +48,57 @@ module BookModule
     author = Author.new(first_name, last_name) unless @authors.include?(author)
     @authors << author
     author
+  end
+
+  def prompt_for_label
+    puts 'Please enter the label details:'
+    print '  Enter label title: '
+    title = gets.chomp.to_s
+    print '  Enter label color: '
+    color = gets.chomp.to_s
+
+    label = Label.new(title, color) unless @labels.include?(label)
+    @labels << label
+    label
+  end
+
+  def prompt_for_publisher
+    print "Please enter the book's publisher: "
+    gets.chomp.to_s
+  end
+
+  def prompt_for_cover_state
+    puts 'Please enter the cover state:'
+    print '  Enter cover state (good / bad): '
+    cover_state = gets.chomp.downcase
+
+    until %w[good bad].include?(cover_state)
+      print '  Invalid input. Enter cover state (good / bad): '
+      cover_state = gets.chomp.downcase
+    end
+
+    cover_state
+  end
+
+  def prompt_for_publish_date
+    puts 'Please enter the publish date:'
+    print '  Enter year: '
+    year = gets.chomp.to_i
+
+    print '  Enter month (01 - 12): '
+    month = gets.chomp.to_i
+
+    print '  Enter day (01 - 31): '
+    day = gets.chomp.to_i
+
+    begin
+      publish_date = Date.new(year, month, day)
+    rescue ArgumentError => e
+      puts "  Error: #{e.message}. Please enter a valid date."
+      publish_date = prompt_for_publish_date
+    end
+
+    publish_date
   end
 
   def store_books_to_json
@@ -122,6 +173,27 @@ module GameModule
     print 'Is the game multiplayer? (yes / no): '
     multiplayer_input = gets.chomp.to_s.downcase
     multiplayer_input == 'yes'
+  end
+
+  def prompt_for_last_played_date
+    puts 'Please enter the last played date:'
+    print '  Enter year: '
+    year = gets.chomp.to_i
+
+    print '  Enter month (01 - 12): '
+    month = gets.chomp.to_i
+
+    print '  Enter day (01 - 31): '
+    day = gets.chomp.to_i
+
+    begin
+      last_played_date = Date.new(year, month, day)
+    rescue ArgumentError => e
+      puts "  Error: #{e.message}. Please enter a valid date."
+      last_played_date = prompt_for_last_played_date
+    end
+
+    last_played_date
   end
 
   def store_games_to_json
@@ -391,13 +463,11 @@ module LoadHandler
 end
 
 class App
-  include StoreHandler
-  include AuthorModule
-  include LabelModule
-  include GenreModule
+  include BookModule
   include GameModule
   include MusicAlbumModule
-  include BookModule
+  include ListHandler
+  include StoreHandler
   include LoadHandler
 
   def initialize
