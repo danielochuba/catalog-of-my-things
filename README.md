@@ -21,7 +21,7 @@
 
 # 📖   Catalog Of Things<a name="about-project"></a>
 
-**Catalog Of Things** is a console app that will help you to keep a record of different types of things you own: books, music albums and games. Everything is based on the UML class diagram presented below. The data is stored in JSON files but we also prepared a database with tables structure analogical to your program's class structure.
+**Catalog Of Things** is a console app that will help you to keep a record of different types of things you own: books, music albums and games. Everything is based on the UML class diagram presented below. The data is stored in JSON files but I also prepared a database with tables structure analogical to the program's class structure.
 
 <div align="center">
  
@@ -115,11 +115,16 @@ or
 
 To run the project:
 
-- Method 1:
+- Step 1:
 
 ```sh
   cd PATH_TO_CLONE
 ```
+- Step :
+  ```sh
+    ruby main.rb
+  ```
+  Then follow instructions in the terminal
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
