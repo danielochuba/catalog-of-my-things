@@ -120,7 +120,7 @@ To run the project:
 ```sh
   cd PATH_TO_CLONE
 ```
-- Step :
+- Step 2:
   ```sh
     ruby main.rb
   ```
